@@ -1,5 +1,6 @@
 package com.notas;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.ContentValues;
@@ -12,8 +13,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	
 	private static final int DATABASE_VERSION = 1;
 	private static final String DATABASE_NAME = "notas_db";
-	private static final String TABLE_NOTA = "nota_table";
-	
+	private static final String TABLE_NOTA = "nota_table";	
 	private static final String KEY_ID = "id";
 	private static final String KEY_TITLE = "title";
 	private static final String KEY_NOTA = "nota";
@@ -45,7 +45,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		onCreate(db);		
 	}
 	
-	// GRUD Operations (Create, Read, Update and Delete)
+	/*
+	 *  GRUD Operations (Create, Read, Update and Delete)
+	 */
+	
+	// Insert 	
 	public void addNota(Nota nota){
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
@@ -71,24 +75,58 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		Nota nota = new Nota(Integer.parseInt(cursor.getString(0)), cursor.getString(1),
 				cursor.getString(2), cursor.getString(3), Long.parseLong(cursor.getString(4)));
 		
+		cursor.close();		
 		return nota;
 	}
 	
 	// Select All by id
 	public List<Nota> getAllNotas(){
 		
+		String query = "SELECT * FROM " + TABLE_NOTA;
+		List<Nota> lista_notas = new ArrayList<Nota>();		
+		SQLiteDatabase db = this.getWritableDatabase();
+		Cursor cursor = db.rawQuery(query, null);
+		if (cursor.moveToFirst()){
+			do {
+				Nota nota = new Nota();
+				nota.set_id(Integer.parseInt(cursor.getString(0)));
+				nota.set_folder(cursor.getString(1));
+				nota.set_title(cursor.getString(2));
+				nota.set_date(Long.parseLong(cursor.getString(3)));
+				nota.set_note(cursor.getString(4));
+				lista_notas.add(nota);				
+			} while (cursor.moveToNext());
+			cursor.close();
+		}
+		return lista_notas;
+		
 	}
 	
+	// Retorna o número de linhas do banco.
 	public int getNotasCount(){
-		
+		String query = "SELECT * FROM " + TABLE_NOTA;
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor = db.rawQuery(query, null);
+		cursor.close();
+		return cursor.getCount();		
 	}
 	
+	// Atualiza linha
 	public int updateNota(Nota nota){
-		
+		SQLiteDatabase db = this.getWritableDatabase();
+		ContentValues values = new ContentValues();
+		values.put(KEY_FOLDER, nota.get_folder());
+		values.put(KEY_TITLE, nota.get_title());
+		values.put(KEY_DATE, nota.get_date());
+		values.put(KEY_NOTA, nota.get_note());
+		return db.update(TABLE_NOTA, values, KEY_ID + " = ?", new String[] { String.valueOf(nota.get_id()) });
 	}
 	
+	// Delete row by id
 	public void deleteNota(Nota nota){
-		
+		SQLiteDatabase db = this.getWritableDatabase();
+		db.delete(TABLE_NOTA,  KEY_ID + " = ?", new String[] { String.valueOf(nota.get_id()) });
+		db.close();
 	}
 	
 	
