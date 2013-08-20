@@ -80,10 +80,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	}
 	
 	// Select All by id
-	public List<Nota> getAllNotas(){
+	public ArrayList<Nota> getAllNotas(){
 		
 		String query = "SELECT * FROM " + TABLE_NOTA;
-		List<Nota> lista_notas = new ArrayList<Nota>();		
+		ArrayList<Nota> lista_notas = new ArrayList<Nota>();		
 		SQLiteDatabase db = this.getWritableDatabase();
 		Cursor cursor = db.rawQuery(query, null);
 		if (cursor.moveToFirst()){
@@ -92,7 +92,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				nota.set_id(Integer.parseInt(cursor.getString(0)));
 				nota.set_folder(cursor.getString(1));
 				nota.set_title(cursor.getString(2));
-				nota.set_date(Long.parseLong(cursor.getString(3)));
+				nota.set_date(cursor.getLong(3));
 				nota.set_note(cursor.getString(4));
 				lista_notas.add(nota);				
 			} while (cursor.moveToNext());

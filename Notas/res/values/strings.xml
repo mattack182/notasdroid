@@ -5,5 +5,7 @@
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     <string name="str_bloco_notas">Bloco de Notas</string>
+    <string name="title_activity_adicionar__pasta">Novo Bloco de Notas</string>
+    <string name="title_activity_teste">Teste</string>
 
 </resources>

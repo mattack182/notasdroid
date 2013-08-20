@@ -22,6 +22,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.notas.Activity_add_bloco"
+            android:label="@string/title_activity_adicionar__pasta" android:parentActivityName="com.notas.MainActivity">
+        </activity>
+        <activity
+            android:name="com.notas.Teste"
+            android:label="@string/title_activity_teste"
+            android:parentActivityName="MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="MainActivity" />
+        </activity>
     </application>
 
 </manifest>
