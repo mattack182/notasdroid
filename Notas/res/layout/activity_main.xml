@@ -9,7 +9,7 @@
         android:id="@+id/listView1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/button1"
+        android:layout_above="@+id/button_ok_edit_bloco"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         tools:listitem="@layout/linha_projects" >
@@ -17,7 +17,7 @@
     </ListView>
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/button_ok_edit_bloco"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

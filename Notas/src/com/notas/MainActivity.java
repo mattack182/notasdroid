@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -23,6 +24,7 @@ public class MainActivity extends Activity {
 	private MenuItem adicionar;
 	public DatabaseHandler db;
 	public int REQUEST_ADD_BLOCO = 10;
+	public int REQUEST_EDIT_BLOCO = 11;
 	ArrayList<Nota> array_notas = new ArrayList<Nota>();
 	Adaptador adapter;
 	
@@ -30,29 +32,60 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-		
+		setContentView(R.layout.activity_main);		
 		// Instancia DatabaseHandler
 		db = new DatabaseHandler(this);
 		// obtem todas as entradas do banco
-		array_notas = db.getAllNotas();
-		
+		array_notas = db.getAllNotas();		
 		ListView lista = (ListView)findViewById(R.id.listView1);
 		adapter = new Adaptador(this);
 		lista.setAdapter(adapter);
+		
 		lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				Toast.makeText(getApplicationContext(), "Agora ira abrir o bloco de notas selecionado", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), "SHORT CLICK", Toast.LENGTH_SHORT).show();
 				
 			}
+		});	
+		
+		lista.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				Toast.makeText(getApplicationContext(), "LONG CLICK", Toast.LENGTH_SHORT).show();
+				Intent intent = new Intent(getApplicationContext(), Activity_edit_bloco.class);
+				intent.putExtra("id", array_notas.get(arg2).get_id());
+				startActivityForResult(intent, REQUEST_EDIT_BLOCO);
+				return false;
+			}
 		});
-		
-		
-		
 	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Retorno a MainActivity !
+		
+		if ( requestCode == REQUEST_ADD_BLOCO && resultCode == RESULT_OK ){
+			array_notas.clear();
+			array_notas = db.getAllNotas();
+			adapter.notifyDataSetChanged();
+		// usuario criou novo bloco de notas
+		// make toast "bloco criado com sucesso"
+		// atualiza listview
+		}
+		
+		if ( requestCode == REQUEST_EDIT_BLOCO && resultCode == RESULT_OK){
+			array_notas.clear();
+			array_notas = db.getAllNotas();
+			adapter.notifyDataSetChanged();
+		}
+		
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -60,10 +93,10 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		adicionar = menu.add(Menu.NONE, 10, 0, "Adicionar");
 		adicionar.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-		adicionar.setIcon(android.R.drawable.ic_menu_manage);
-		
+		adicionar.setIcon(android.R.drawable.ic_menu_manage);		
 		return true;
 	}
+	
 	
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {		
@@ -81,25 +114,11 @@ public class MainActivity extends Activity {
 	}	
 
 	
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO Retorno a MainActivity !
-		
-		if ( requestCode == REQUEST_ADD_BLOCO && resultCode == RESULT_OK ){
-			array_notas.clear();
-			array_notas = db.getAllNotas();
-			adapter.notifyDataSetChanged();
-		// usuario criou novo bloco de notas
-		// make toast "bloco criado com sucesso"
-		// atualiza listview
-		}
-		
-		super.onActivityResult(requestCode, resultCode, data);
-	}
+	
 
 	
 	
-	// OnClick dos botoes...
+	// Eventos dos Botões
 	
 	public void bt_add_bloco(View v){
 		Intent intent = new Intent(getApplicationContext(), Activity_add_bloco.class);

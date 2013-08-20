@@ -62,7 +62,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	
 	// Select by id
 	public Nota getNota(int id){
-		SQLiteDatabase db = this.getWritableDatabase();
+		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor = db.query(TABLE_NOTA, new String[] { 
 				KEY_ID,  
 				KEY_FOLDER,
@@ -89,7 +89,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		if (cursor.moveToFirst()){
 			do {
 				Nota nota = new Nota();
-				nota.set_id(Integer.parseInt(cursor.getString(0)));
+				nota.set_id(cursor.getInt(0));
 				nota.set_folder(cursor.getString(1));
 				nota.set_title(cursor.getString(2));
 				nota.set_date(cursor.getLong(3));

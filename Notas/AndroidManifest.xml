@@ -24,7 +24,8 @@
         </activity>
         <activity
             android:name="com.notas.Activity_add_bloco"
-            android:label="@string/title_activity_adicionar__pasta" android:parentActivityName="com.notas.MainActivity">
+            android:label="@string/title_activity_adicionar__pasta"
+            android:parentActivityName="com.notas.MainActivity" >
         </activity>
         <activity
             android:name="com.notas.Teste"
@@ -33,6 +34,14 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="MainActivity" />
+        </activity>
+        <activity
+            android:name="com.notas.Activity_edit_bloco"
+            android:label="@string/title_activity_activity_edit_bloco"
+            android:parentActivityName="com.notas.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.notas.MainActivity" />
         </activity>
     </application>
 
