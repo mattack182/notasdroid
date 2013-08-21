@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -32,7 +33,9 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);		
+		setContentView(R.layout.activity_main);
+		
+		
 		// Instancia DatabaseHandler
 		db = new DatabaseHandler(this);
 		// obtem todas as entradas do banco
@@ -62,6 +65,8 @@ public class MainActivity extends Activity {
 				return false;
 			}
 		});
+		
+		
 	}
 	
 	@Override
@@ -80,7 +85,7 @@ public class MainActivity extends Activity {
 		if ( requestCode == REQUEST_EDIT_BLOCO && resultCode == RESULT_OK){
 			array_notas.clear();
 			array_notas = db.getAllNotas();
-			adapter.notifyDataSetChanged();
+			adapter.notifyDataSetChanged();		
 		}
 		
 		super.onActivityResult(requestCode, resultCode, data);

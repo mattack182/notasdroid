@@ -21,7 +21,7 @@ public class Activity_add_bloco extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.adicionar__pasta, menu);
+		getMenuInflater().inflate(R.menu.activity_add_bloco, menu);
 		return true;
 	}
 	

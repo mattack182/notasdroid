@@ -7,22 +7,21 @@
 
     <ImageView
         android:id="@+id/thumb_folder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="15dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:src="@android:drawable/sym_contact_card" />
 
     <TextView
         android:id="@+id/folder_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/thumb_folder"
-        android:layout_marginBottom="20dp"
-        android:layout_marginLeft="20dp"
+        android:layout_alignBottom="@+id/thumb_folder"
+        android:layout_marginLeft="14dp"
         android:layout_toRightOf="@+id/thumb_folder"
         android:text="TextView"
         android:textSize="18sp" />

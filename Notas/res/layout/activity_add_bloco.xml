@@ -19,7 +19,7 @@
         android:singleLine="true" />
 
     <Button
-        android:id="@+id/button_ok_edit_bloco"
+        android:id="@+id/button_add_bloco"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/editText_edit_bloco"

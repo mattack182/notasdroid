@@ -17,13 +17,21 @@
         android:maxLines="1"
         android:singleLine="true" />
 
-    <Button
-        android:id="@+id/button_ok_edit_bloco"
-        android:layout_width="wrap_content"
+    <ImageButton
+        android:id="@+id/imageButton1"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/editText_edit_bloco"
+        android:layout_alignTop="@+id/button_add_bloco"
+        android:src="@android:drawable/ic_menu_delete" />
+
+    <Button
+        android:id="@+id/button_add_bloco"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editText_edit_bloco"
         android:layout_below="@+id/editText_edit_bloco"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="34dp"
+        android:layout_marginTop="24dp"
         android:onClick="bt_OK"
         android:text="OK" />
 
