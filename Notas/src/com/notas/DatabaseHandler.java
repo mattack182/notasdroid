@@ -129,6 +129,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		db.close();
 	}
 	
+	// Delete row by folder
+	public void deleteFolder(Nota nota){
+		SQLiteDatabase db = this.getWritableDatabase();
+		db.delete(TABLE_NOTA,  KEY_FOLDER + " = ?", new String[] { nota.get_folder() });
+		db.close();
+	}
+	
 	
 	
 	

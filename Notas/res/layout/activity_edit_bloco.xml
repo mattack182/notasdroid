@@ -18,11 +18,12 @@
         android:singleLine="true" />
 
     <ImageButton
-        android:id="@+id/imageButton1"
+        android:id="@+id/imageButton_delete_folder"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:layout_alignRight="@+id/editText_edit_bloco"
         android:layout_alignTop="@+id/button_add_bloco"
+        android:onClick="bt_delete"
         android:src="@android:drawable/ic_menu_delete" />
 
     <Button

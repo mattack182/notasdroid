@@ -1,6 +1,8 @@
 package com.notas;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -55,6 +57,39 @@ public class Activity_edit_bloco extends Activity {
 		else{
 			Toast.makeText(getApplicationContext(), "Você não digitou o nome do bloco", Toast.LENGTH_SHORT).show();
 		}
+		
+	}
+	
+	public void bt_delete(View v){
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);		
+		builder.setTitle("Remover Bloco de Notas");
+		builder.setMessage("Você tem certeza que deseja remove-lo?");		
+		builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+		    public void onClick(DialogInterface dialog, int which) {		    	
+		    	db.deleteFolder(nota);
+		    	EditText nome_bloco = (EditText) findViewById(R.id.editText_edit_bloco);
+				nome_bloco.setText("");
+		        dialog.dismiss();		        
+		        Intent in = new Intent();			
+				setResult(RESULT_OK, in);
+				Toast.makeText(getApplicationContext(), "O Bloco de notas \""+nota._folder+"\" foi removido com sucesso!", Toast.LENGTH_SHORT).show();
+				finish();
+		    }
+		});
+		
+		builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+		    public void onClick(DialogInterface dialog, int which) {
+		        // Não faz nada, fecha a AlertDialog
+		        dialog.dismiss();
+		        
+		    }
+		});
+
+		AlertDialog alert = builder.create();
+		alert.show();
+		
+		
 		
 	}
 
