@@ -7,7 +7,7 @@ public class Nota {
 	String _folder;
 	String _title;
 	String _note;
-	Long _date;	
+	long _date;	
 	
 	// construtor vazio
 	public Nota(){
@@ -15,7 +15,7 @@ public class Nota {
 	}
 	
 	// construtor	
-	public Nota(int id, String folder, String title, String note, Long date){
+	public Nota(int id, String folder, String title, String note, long date){
 		this._id = id;
 		this._folder = folder;
 		this._title = title;
@@ -54,11 +54,11 @@ public class Nota {
 		this._note = _note;
 	}
 
-	public Long get_date() {
+	public long get_date() {
 		return _date;
 	}
 
-	public void set_date(Long _date) {
+	public void set_date(long _date) {
 		this._date = _date;
 	}
 	

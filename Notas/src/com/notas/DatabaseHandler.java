@@ -68,14 +68,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				KEY_FOLDER,
 				KEY_TITLE,
 				KEY_DATE,
-				KEY_NOTA}, KEY_ID + "=?", new String[] {String.valueOf(id)}, null, null, null);
+				KEY_NOTA}, KEY_ID + " = ?", new String[] {String.valueOf(id)}, null, null, null);
 		if (cursor != null)
 			cursor.moveToFirst();
 		
-		Nota nota = new Nota(Integer.parseInt(cursor.getString(0)), cursor.getString(1),
-				cursor.getString(2), cursor.getString(3), Long.parseLong(cursor.getString(4)));
+		Nota nota = new Nota(cursor.getInt(0), cursor.getString(1),
+				cursor.getString(2), cursor.getString(3), cursor.getLong(4));
 		
-		cursor.close();		
+		//cursor.close();		
 		return nota;
 	}
 	
@@ -108,7 +108,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor = db.rawQuery(query, null);
 		cursor.close();
-		return cursor.getCount();		
+		return cursor.getCount();
 	}
 	
 	// Atualiza linha

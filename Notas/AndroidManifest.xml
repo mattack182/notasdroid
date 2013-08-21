@@ -37,7 +37,7 @@
         </activity>
         <activity
             android:name="com.notas.Activity_edit_bloco"
-            android:label="@string/title_activity_activity_edit_bloco"
+            android:label="Editar"
             android:parentActivityName="com.notas.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

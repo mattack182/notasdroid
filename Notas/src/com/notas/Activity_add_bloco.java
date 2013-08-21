@@ -33,6 +33,7 @@ public class Activity_add_bloco extends Activity {
 			// Salva no DB
 			Nota nota = new Nota();
 			nota.set_folder(nome_pasta.getText().toString());
+			nota.set_date(System.currentTimeMillis());
 			db.addNota(nota);
 			
 			Intent in = new Intent();
