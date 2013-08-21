@@ -6,26 +6,27 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".Activity_add_bloco" >
-
-    <EditText
-        android:id="@+id/editText_add_nota"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:hint="Digite o nome do bloco..."
-        android:maxLength="20"
-        android:maxLines="1"
-        android:singleLine="true" />
+    tools:context=".Activity_add_nota" >
 
     <Button
         android:id="@+id/button_add_nota_OK"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editText_add_nota"
+        android:layout_above="@id/button_add_nota_OK"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="34dp"
+        android:layout_marginBottom="19dp"
         android:onClick="bt_OK"
         android:text="OK" />
+
+    <EditText
+        android:id="@+id/editText_nota"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:ems="10"
+        android:inputType="textMultiLine" />
 
 </RelativeLayout>

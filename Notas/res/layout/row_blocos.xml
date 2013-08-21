@@ -14,14 +14,14 @@
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
-        android:src="@android:drawable/sym_contact_card" />
+        android:src="@drawable/folder" />
 
     <TextView
         android:id="@+id/folder_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/thumb_folder"
         android:layout_marginLeft="14dp"
+        android:layout_marginTop="20dp"
         android:layout_toRightOf="@+id/thumb_folder"
         android:text="TextView"
         android:textSize="18sp" />

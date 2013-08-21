@@ -12,7 +12,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/str_bloco_notas"
-        android:theme="@android:style/Theme.Holo" >
+        android:theme="@style/AppTheme" >
         <activity
             android:name="com.notas.MainActivity"
             android:label="@string/str_bloco_notas" >
@@ -42,6 +42,14 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.notas.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.notas.Activity_Notas"
+            android:label="@string/title_activity_activity__notas" >
+        </activity>
+        <activity
+            android:name="com.notas.Activity_add_nota"
+            android:label="@string/title_activity_activity_add_nota" >
         </activity>
     </application>
 

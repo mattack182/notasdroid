@@ -75,13 +75,39 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		Nota nota = new Nota(cursor.getInt(0), cursor.getString(1),
 				cursor.getString(2), cursor.getString(3), cursor.getLong(4));
 		
-		//cursor.close();		
+		cursor.close();		
 		return nota;
 	}
 	
-	// Select All by id
-	public ArrayList<Nota> getAllNotas(){
+	// Select by folder	
+	public ArrayList<Nota> getNotaFolder(String folder){
+		SQLiteDatabase db = this.getReadableDatabase();
+		ArrayList<Nota> lista_notas = new ArrayList<Nota>();
+		Cursor cursor = db.query(TABLE_NOTA, new String[] { 
+				KEY_ID,  
+				KEY_FOLDER,
+				KEY_TITLE,
+				KEY_DATE,
+				KEY_NOTA}, KEY_FOLDER + " = ?", new String[] { folder }, null, null, null);
+				
+		if (cursor.moveToFirst()){
+			do {
+				Nota nota = new Nota();
+				nota.set_id(cursor.getInt(0));
+				nota.set_folder(cursor.getString(1));
+				nota.set_title(cursor.getString(2));
+				nota.set_date(cursor.getLong(3));
+				nota.set_note(cursor.getString(4));				
+				lista_notas.add(nota);				
+			} while (cursor.moveToNext());			
+		}
 		
+		cursor.close();		
+		return lista_notas;
+	}
+	
+	// Select All by id
+	public ArrayList<Nota> getAllNotas(){		
 		String query = "SELECT * FROM " + TABLE_NOTA;
 		ArrayList<Nota> lista_notas = new ArrayList<Nota>();		
 		SQLiteDatabase db = this.getWritableDatabase();
@@ -93,11 +119,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				nota.set_folder(cursor.getString(1));
 				nota.set_title(cursor.getString(2));
 				nota.set_date(cursor.getLong(3));
-				nota.set_note(cursor.getString(4));
+				nota.set_note(cursor.getString(4));				
 				lista_notas.add(nota);				
-			} while (cursor.moveToNext());
-			cursor.close();
+			} while (cursor.moveToNext());			
 		}
+		
+		cursor.close();
 		return lista_notas;
 		
 	}

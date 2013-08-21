@@ -1,22 +1,21 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:onClick="bt_add_bloco"
-    tools:context=".MainActivity" >
+    android:layout_height="match_parent"
+    tools:context=".Activity_Notas" >
 
     <ListView
-        android:id="@+id/listView_blocos"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/listView_notas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_above="@+id/button_add_nota"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        tools:listitem="@layout/row_blocos" >
+        android:layout_centerHorizontal="true"
+        tools:listitem="@layout/row_notas" >
 
     </ListView>
 
-    <Button
+     <Button
         android:id="@+id/button_add_nota"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="match_parent"
@@ -24,7 +23,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:includeFontPadding="false"
-        android:onClick="bt_add_bloco"
-        android:text="Nova Pasta" />
+        android:onClick="bt_add_nota"
+        android:text="Nova Nota" />
+  
 
 </RelativeLayout>

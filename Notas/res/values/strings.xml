@@ -8,5 +8,7 @@
     <string name="title_activity_adicionar__pasta">Novo Bloco de Notas</string>
     <string name="title_activity_teste">Teste</string>
     <string name="title_activity_activity_edit_bloco">Activity_edit_bloco</string>
+    <string name="title_activity_activity__notas">Notas</string>
+    <string name="title_activity_activity_add_nota">Nova Nota</string>
 
 </resources>

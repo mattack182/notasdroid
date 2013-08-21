@@ -1,6 +1,8 @@
 package com.notas;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 
 import android.app.Activity;
 import android.content.Context;
@@ -14,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -33,32 +34,38 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-		
-		
+		setContentView(R.layout.activity_main);		
 		// Instancia DatabaseHandler
 		db = new DatabaseHandler(this);
 		// obtem todas as entradas do banco
 		array_notas = db.getAllNotas();		
-		ListView lista = (ListView)findViewById(R.id.listView1);
+		ListView lista = (ListView)findViewById(R.id.listView_blocos);
 		adapter = new Adaptador(this);
-		lista.setAdapter(adapter);
+		lista.setAdapter(adapter);	
 		
+		/*
+		 * ListView Listeners
+		 */
+	
+		// SIMPLE CLICK
 		lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
-				Toast.makeText(getApplicationContext(), "SHORT CLICK", Toast.LENGTH_SHORT).show();
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+				//Toast.makeText(getApplicationContext(), "SHORT CLICK", Toast.LENGTH_SHORT).show();
+				Intent intent = new Intent(getApplicationContext(), Activity_Notas.class);
+				intent.putExtra("folder", array_notas.get(arg2).get_folder());
+				startActivityForResult(intent, 999);				
 				
 			}
 		});	
 		
+		// LONG CLICK
 		lista.setOnItemLongClickListener(new OnItemLongClickListener() {
 
 			@Override
 			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
-				Toast.makeText(getApplicationContext(), "LONG CLICK", Toast.LENGTH_SHORT).show();
+				//Toast.makeText(getApplicationContext(), "LONG CLICK", Toast.LENGTH_SHORT).show();
 				Intent intent = new Intent(getApplicationContext(), Activity_edit_bloco.class);
 				intent.putExtra("id", array_notas.get(arg2).get_id());
 				startActivityForResult(intent, REQUEST_EDIT_BLOCO);
@@ -91,7 +98,6 @@ public class MainActivity extends Activity {
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 	
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -101,8 +107,7 @@ public class MainActivity extends Activity {
 		adicionar.setIcon(android.R.drawable.ic_menu_manage);		
 		return true;
 	}
-	
-	
+		
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {		
 		
@@ -119,19 +124,18 @@ public class MainActivity extends Activity {
 	}	
 
 	
-	
-
-	
-	
-	// Eventos dos Botões
-	
+	/*
+	 * Evento de botão
+	 */	
 	public void bt_add_bloco(View v){
 		Intent intent = new Intent(getApplicationContext(), Activity_add_bloco.class);
 		startActivityForResult(intent, REQUEST_ADD_BLOCO);	
 	}
 	
 	
-	// Classe que trata a ListView
+	/*
+	 * Classe que trata a ListView
+	 */	
 	class Adaptador extends BaseAdapter {
 		
 		Context context;
@@ -144,8 +148,8 @@ public class MainActivity extends Activity {
 		}
 
 		@Override
-		public int getCount() {	
-			return array_notas.size();
+		public int getCount() {
+			return array_notas.size();			
 		}
 
 		@Override
@@ -162,26 +166,27 @@ public class MainActivity extends Activity {
 		public View getView(int arg0, View arg1, ViewGroup arg2) {
 			
 			if (arg1 == null) {
-				arg1 = inflater.inflate(R.layout.linha_projects, arg2, false);
+				arg1 = inflater.inflate(R.layout.row_blocos, arg2, false);
 			}
 
 			// seta o nome_da_foto da linha
 			TextView folder_name = (TextView) arg1.findViewById(R.id.folder_name);
-			folder_name.setText(array_notas.get(arg0)._folder);
+			HashSet<Nota> hash = new HashSet<Nota>();
+			ArrayList<Nota> nh = array_notas;
+			hash.addAll(nh);
+			nh.clear();
+			nh.addAll(hash);
+			
+			
+			folder_name.setText(array_notas.get(arg0).get_folder());
 
 			// seta o thumbnail da linha
 			ImageView thumb_folder = (ImageView) arg1.findViewById(R.id.thumb_folder);
-			thumb_folder.setImageResource(android.R.drawable.sym_contact_card);
+			thumb_folder.setImageResource(R.drawable.folder);
 
 			return arg1;
 		}
 		
 	}
 	
-	
-	
-	
-
-	
-
 }

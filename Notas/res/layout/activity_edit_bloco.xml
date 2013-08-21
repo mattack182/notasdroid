@@ -9,7 +9,7 @@
     tools:context=".Activity_add_bloco" >
 
     <EditText
-        android:id="@+id/editText_edit_bloco"
+        android:id="@+id/editText_add_nota"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ellipsize="end"
@@ -21,17 +21,17 @@
         android:id="@+id/imageButton_delete_folder"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/editText_edit_bloco"
-        android:layout_alignTop="@+id/button_add_bloco"
+        android:layout_alignRight="@+id/editText_add_nota"
+        android:layout_alignTop="@+id/button_add_nota_OK"
         android:onClick="bt_delete"
         android:src="@android:drawable/ic_menu_delete" />
 
     <Button
-        android:id="@+id/button_add_bloco"
+        android:id="@+id/button_add_nota_OK"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText_edit_bloco"
-        android:layout_below="@+id/editText_edit_bloco"
+        android:layout_alignLeft="@+id/editText_add_nota"
+        android:layout_below="@+id/editText_add_nota"
         android:layout_marginTop="24dp"
         android:onClick="bt_OK"
         android:text="OK" />

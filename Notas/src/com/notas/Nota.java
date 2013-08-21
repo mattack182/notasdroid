@@ -4,10 +4,10 @@ public class Nota {
 	
 	// variaveis privadas
 	int _id;
-	String _folder;
-	String _title;
-	String _note;
-	long _date;	
+	private String _folder;
+	private String _title;
+	private String _note;
+	private long _date;	
 	
 	// construtor vazio
 	public Nota(){
