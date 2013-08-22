@@ -37,12 +37,19 @@
         </activity>
         <activity
             android:name="com.notas.Activity_Notas"
-            android:label="@string/title_activity_activity__notas" 
-            android:parentActivityName="com.notas.MainActivity">
+            android:label="@string/title_activity_activity__notas"
+            android:parentActivityName="com.notas.MainActivity" >
         </activity>
         <activity
             android:name="com.notas.Activity_add_nota"
-            android:label="@string/title_activity_activity_add_nota">
+            android:label="@string/title_activity_activity_add_nota" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.notas.Activity_Notas" />
+        </activity>
+        <activity
+            android:name="com.notas.Activity_view_edit_nota"
+            android:label="@string/title_activity_activity_view_edit_nota">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.notas.Activity_Notas" />

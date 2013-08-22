@@ -24,7 +24,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/editText_add_nota"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="34dp"
+        android:layout_marginTop="50dp"
+        android:minWidth="150dip"
         android:onClick="bt_OK"
         android:text="OK" />
 

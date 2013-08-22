@@ -1,35 +1,42 @@
 package com.notas;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import android.os.Bundle;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+@SuppressLint("DefaultLocale")
 public class Activity_Notas extends Activity {
 
+	private MenuItem adicionar;
 	public DatabaseHandler db = new DatabaseHandler(this);
 	public ArrayList<Nota> array_notas = new ArrayList<Nota>();
 	public Adaptador adapter;
 	public String FOLDER;
 	public int REQUEST_ADD_NOTE = 20;
+	public int REQUEST_VIEW_EDIT_NOTE = 21;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_notas);		
 		FOLDER = getIntent().getStringExtra("folder");
-		setTitle("Bloco: "+FOLDER);
+		setTitle(FOLDER.toUpperCase(Locale.US));
 		array_notas = db.getNotaFolder(FOLDER);
 		// remove linha nota =""
 		for (int i = 0 ; i < array_notas.size(); i++){
@@ -42,12 +49,27 @@ public class Activity_Notas extends Activity {
 		adapter = new Adaptador(this);
 		lista.setAdapter(adapter);
 		
+		lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				Intent intent = new Intent(getApplicationContext(), Activity_view_edit_nota.class);
+				intent.putExtra("id", array_notas.get(arg2).get_id());
+				startActivityForResult(intent, REQUEST_VIEW_EDIT_NOTE);
+				
+			}
+		});
+		
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.activity__notas, menu);
+		adicionar = menu.add(Menu.NONE, 10, 0, "Adicionar");
+		adicionar.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		adicionar.setIcon(android.R.drawable.ic_menu_add);	
 		return true;
 	}
 	
@@ -72,6 +94,16 @@ public class Activity_Notas extends Activity {
 		adapter.notifyDataSetChanged();
 		
 		
+	}
+	
+	@Override
+	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+		
+		if (item == adicionar){
+			bt_add_nota(getCurrentFocus());
+		}
+		
+		return super.onMenuItemSelected(featureId, item);
 	}
 	
 	class Adaptador extends BaseAdapter {

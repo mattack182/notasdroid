@@ -10,5 +10,6 @@
     <string name="title_activity_activity_edit_bloco">Activity_edit_bloco</string>
     <string name="title_activity_activity__notas">Notas</string>
     <string name="title_activity_activity_add_nota">Nova Nota</string>
+    <string name="title_activity_activity_view_edit_nota">Activity_view_edit_nota</string>
 
 </resources>

@@ -25,6 +25,7 @@
         android:layout_alignParentLeft="true"
         android:includeFontPadding="false"
         android:onClick="bt_add_bloco"
-        android:text="Nova Pasta" />
+        android:text="Adicionar Pasta"
+        android:textSize="18sp" />
 
 </RelativeLayout>

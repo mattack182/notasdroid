@@ -19,6 +19,7 @@ public class Nota {
 		this._id = id;
 		this._folder = folder;
 		this._title = title;
+		this._note = note;
 		this._date = date;
 	}
 

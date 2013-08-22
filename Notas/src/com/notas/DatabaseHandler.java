@@ -69,13 +69,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				KEY_TITLE,
 				KEY_DATE,
 				KEY_NOTA}, KEY_ID + " = ?", new String[] {String.valueOf(id)}, null, null, null);
-		if (cursor != null)
-			cursor.moveToFirst();
+		if (cursor != null) 
+		cursor.moveToFirst();
 		
-		Nota nota = new Nota(cursor.getInt(0), cursor.getString(1),
-				cursor.getString(2), cursor.getString(3), cursor.getLong(4));
-		
-		cursor.close();		
+		Nota nota = new Nota();
+		nota.set_id(cursor.getInt(0));
+		nota.set_folder(cursor.getString(1));
+		nota.set_title(cursor.getString(2));
+		nota.set_date(cursor.getLong(3));
+		nota.set_note(cursor.getString(4));
+		cursor.close();
 		return nota;
 	}
 	
