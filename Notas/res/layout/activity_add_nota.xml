@@ -28,6 +28,7 @@
         android:layout_alignParentTop="true"
         android:ems="10"
         android:hint="Digite uma nota.."
-        android:inputType="textMultiLine" />
+        android:inputType="textMultiLine|textLongMessage"
+        android:maxLines="10" />
 
 </RelativeLayout>

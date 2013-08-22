@@ -28,14 +28,6 @@
             android:parentActivityName="com.notas.MainActivity" >
         </activity>
         <activity
-            android:name="com.notas.Teste"
-            android:label="@string/title_activity_teste"
-            android:parentActivityName="MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="MainActivity" />
-        </activity>
-        <activity
             android:name="com.notas.Activity_edit_bloco"
             android:label="Editar Bloco"
             android:parentActivityName="com.notas.MainActivity" >
@@ -45,11 +37,15 @@
         </activity>
         <activity
             android:name="com.notas.Activity_Notas"
-            android:label="@string/title_activity_activity__notas" >
+            android:label="@string/title_activity_activity__notas" 
+            android:parentActivityName="com.notas.MainActivity">
         </activity>
         <activity
             android:name="com.notas.Activity_add_nota"
-            android:label="@string/title_activity_activity_add_nota" >
+            android:label="@string/title_activity_activity_add_nota">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.notas.Activity_Notas" />
         </activity>
     </application>
 

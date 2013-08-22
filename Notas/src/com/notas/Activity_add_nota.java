@@ -36,7 +36,6 @@ public class Activity_add_nota extends Activity {
 			nota.set_folder(FOLDER);
 			nota.set_date(System.currentTimeMillis());
 			nota.set_note(txt.getText().toString());
-			//nota.set_title(txt.getText().toString().substring(0, 30)+"...");
 			db.addNota(nota);
 			
 			Intent in = new Intent();

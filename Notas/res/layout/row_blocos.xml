@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/thumb_folder"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginBottom="10dp"
@@ -24,6 +24,6 @@
         android:layout_marginTop="20dp"
         android:layout_toRightOf="@+id/thumb_folder"
         android:text="TextView"
-        android:textSize="18sp" />
+        android:textSize="20sp" />
 
 </RelativeLayout>

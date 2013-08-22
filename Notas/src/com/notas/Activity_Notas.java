@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -26,8 +27,9 @@ public class Activity_Notas extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_notas);
+		setContentView(R.layout.activity_notas);		
 		FOLDER = getIntent().getStringExtra("folder");
+		setTitle("Bloco: "+FOLDER);
 		array_notas = db.getNotaFolder(FOLDER);
 		// remove linha nota =""
 		for (int i = 0 ; i < array_notas.size(); i++){
@@ -106,9 +108,14 @@ public class Activity_Notas extends Activity {
 			}		
 			
 			String nota_subject = array_notas.get(arg0).get_note();
+			nota_subject = nota_subject.replace("\n"," ");
+			Log.v("SUBSTRING", nota_subject);
 			if(!nota_subject.isEmpty()){
-				if(nota_subject.length() > 30){
-					nota_subject = nota_subject.substring(0, 30) + "...";	
+				if(nota_subject.length() > 20){
+					nota_subject = (arg0 + 1) + ". " + nota_subject.substring(0, 20) + "...";	
+				}
+				else{
+					nota_subject = (arg0 + 1) + ". "+nota_subject;
 				}
 				TextView nota_name = (TextView)arg1.findViewById(R.id.TextView_nota_name);
 				nota_name.setText(nota_subject);
