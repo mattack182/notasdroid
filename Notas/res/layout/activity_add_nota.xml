@@ -16,7 +16,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="19dp"
-        android:onClick="bt_OK"
+        android:onClick="bt_salva_nota"
         android:text="OK" />
 
     <EditText
@@ -27,6 +27,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:ems="10"
+        android:hint="Digite uma nota.."
         android:inputType="textMultiLine" />
 
 </RelativeLayout>

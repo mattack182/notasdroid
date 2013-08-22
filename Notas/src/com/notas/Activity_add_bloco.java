@@ -26,7 +26,7 @@ public class Activity_add_bloco extends Activity {
 	}
 	
 	public void bt_OK(View v){
-		EditText nome_pasta = (EditText)findViewById(R.id.editText_add_nota);
+		EditText nome_pasta = (EditText)findViewById(R.id.editText_add_bloco);
 		nome_pasta.setSingleLine(true);
 		if (!nome_pasta.getText().toString().isEmpty()){
 			
@@ -39,7 +39,6 @@ public class Activity_add_bloco extends Activity {
 			db.addNota(nota);
 			
 			Intent in = new Intent();
-			in.putExtra("nome_pasta", nome_pasta.getText().toString());
 			setResult(RESULT_OK, in);
 			finish();	
 		}

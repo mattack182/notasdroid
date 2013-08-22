@@ -3,11 +3,13 @@ package com.notas;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,18 +29,17 @@ public class MainActivity extends Activity {
 	public DatabaseHandler db;
 	public int REQUEST_ADD_BLOCO = 10;
 	public int REQUEST_EDIT_BLOCO = 11;
-	ArrayList<Nota> array_notas = new ArrayList<Nota>();
+	ArrayList<Nota> array_notas = new ArrayList<Nota>();	
+	ArrayList<String> array_blocos = new ArrayList<String>();
 	Adaptador adapter;
 	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);		
-		// Instancia DatabaseHandler
-		db = new DatabaseHandler(this);
-		// obtem todas as entradas do banco
-		array_notas = db.getAllNotas();		
+		setContentView(R.layout.activity_main);
+		// consulta banco, instancia arrays
+		dataInit();
 		ListView lista = (ListView)findViewById(R.id.listView_blocos);
 		adapter = new Adaptador(this);
 		lista.setAdapter(adapter);	
@@ -53,8 +54,8 @@ public class MainActivity extends Activity {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				//Toast.makeText(getApplicationContext(), "SHORT CLICK", Toast.LENGTH_SHORT).show();
 				Intent intent = new Intent(getApplicationContext(), Activity_Notas.class);
-				intent.putExtra("folder", array_notas.get(arg2).get_folder());
-				startActivityForResult(intent, 999);				
+				intent.putExtra("folder", array_blocos.get(arg2));
+				startActivityForResult(intent, REQUEST_ADD_BLOCO);				
 				
 			}
 		});	
@@ -67,7 +68,7 @@ public class MainActivity extends Activity {
 					int arg2, long arg3) {
 				//Toast.makeText(getApplicationContext(), "LONG CLICK", Toast.LENGTH_SHORT).show();
 				Intent intent = new Intent(getApplicationContext(), Activity_edit_bloco.class);
-				intent.putExtra("id", array_notas.get(arg2).get_id());
+				intent.putExtra("folder", array_blocos.get(arg2));
 				startActivityForResult(intent, REQUEST_EDIT_BLOCO);
 				return false;
 			}
@@ -81,22 +82,19 @@ public class MainActivity extends Activity {
 		// TODO Retorno a MainActivity !
 		
 		if ( requestCode == REQUEST_ADD_BLOCO && resultCode == RESULT_OK ){
-			array_notas.clear();
-			array_notas = db.getAllNotas();
+			dataInit();
 			adapter.notifyDataSetChanged();
-		// usuario criou novo bloco de notas
-		// make toast "bloco criado com sucesso"
-		// atualiza listview
 		}
 		
 		if ( requestCode == REQUEST_EDIT_BLOCO && resultCode == RESULT_OK){
-			array_notas.clear();
-			array_notas = db.getAllNotas();
-			adapter.notifyDataSetChanged();		
+			dataInit();
+			adapter.notifyDataSetChanged();
 		}
 		
 		super.onActivityResult(requestCode, resultCode, data);
 	}
+	
+
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -115,7 +113,7 @@ public class MainActivity extends Activity {
 			for (int i = 0; i < array_notas.size(); i++){
 				db.deleteNota(array_notas.get(i));
 			}
-			array_notas.clear();
+			dataInit();
 			Toast.makeText(getApplicationContext(), "Todo conteúdo foi apagado!!", Toast.LENGTH_SHORT).show();
 			adapter.notifyDataSetChanged();
 			
@@ -132,6 +130,24 @@ public class MainActivity extends Activity {
 		startActivityForResult(intent, REQUEST_ADD_BLOCO);	
 	}
 	
+	public void dataInit(){
+		db = new DatabaseHandler(this);
+		array_notas.clear();
+		array_notas = db.getAllNotas();
+		
+		// linkedhashset para remover as duplicacoes e obter um arraylist de string em sequencia fixa
+		LinkedHashSet<String> pastas = new LinkedHashSet<String>();		
+		for (Nota bloco : array_notas){
+			pastas.add(bloco.get_folder());
+		}
+		array_blocos.clear();
+		array_blocos.addAll(pastas);
+		
+		// DEBUG
+		for(String b : array_blocos){
+			Log.v("ARRAY_BLOCOS", b);
+		}
+	}
 	
 	/*
 	 * Classe que trata a ListView
@@ -149,12 +165,12 @@ public class MainActivity extends Activity {
 
 		@Override
 		public int getCount() {
-			return array_notas.size();			
+			return array_blocos.size();			
 		}
 
 		@Override
 		public Object getItem(int arg0) {	
-			return array_notas.get(arg0);
+			return array_blocos.get(arg0);
 		}
 
 		@Override
@@ -164,24 +180,14 @@ public class MainActivity extends Activity {
 
 		@Override
 		public View getView(int arg0, View arg1, ViewGroup arg2) {
-			
+					
 			if (arg1 == null) {
 				arg1 = inflater.inflate(R.layout.row_blocos, arg2, false);
 			}
-
-			// seta o nome_da_foto da linha
+			
 			TextView folder_name = (TextView) arg1.findViewById(R.id.folder_name);
-			HashSet<Nota> hash = new HashSet<Nota>();
-			ArrayList<Nota> nh = array_notas;
-			hash.addAll(nh);
-			nh.clear();
-			nh.addAll(hash);
-			
-			
-			folder_name.setText(array_notas.get(arg0).get_folder());
-
-			// seta o thumbnail da linha
-			ImageView thumb_folder = (ImageView) arg1.findViewById(R.id.thumb_folder);
+			ImageView thumb_folder = (ImageView) arg1.findViewById(R.id.thumb_folder);			
+			folder_name.setText(array_blocos.get(arg0));			
 			thumb_folder.setImageResource(R.drawable.folder);
 
 			return arg1;

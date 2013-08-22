@@ -20,7 +20,7 @@ public class Activity_Notas extends Activity {
 	public DatabaseHandler db = new DatabaseHandler(this);
 	public ArrayList<Nota> array_notas = new ArrayList<Nota>();
 	public Adaptador adapter;
-	public String FOLDER = new String();
+	public String FOLDER;
 	public int REQUEST_ADD_NOTE = 20;
 	
 	@Override
@@ -29,6 +29,13 @@ public class Activity_Notas extends Activity {
 		setContentView(R.layout.activity_notas);
 		FOLDER = getIntent().getStringExtra("folder");
 		array_notas = db.getNotaFolder(FOLDER);
+		// remove linha nota =""
+		for (int i = 0 ; i < array_notas.size(); i++){
+			if(array_notas.get(i).get_note().isEmpty()){
+				array_notas.remove(i);
+			}
+		}	
+		
 		ListView lista = (ListView)findViewById(R.id.listView_notas);
 		adapter = new Adaptador(this);
 		lista.setAdapter(adapter);
@@ -48,6 +55,23 @@ public class Activity_Notas extends Activity {
 		startActivityForResult(intent, REQUEST_ADD_NOTE);	
 	}
 	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+		
+		array_notas = db.getNotaFolder(FOLDER);
+		// remove linha nota =""
+		for (int i = 0 ; i < array_notas.size(); i++){
+			if(array_notas.get(i).get_note().isEmpty()){
+				array_notas.remove(i);
+			}
+		}
+		adapter.notifyDataSetChanged();
+		
+		
+	}
+	
 	class Adaptador extends BaseAdapter {
 		
 		Context context;
@@ -61,11 +85,7 @@ public class Activity_Notas extends Activity {
 
 		@Override
 		public int getCount() {
-			// gambi para não carregar uma linha vazia quando não há notas no array
-			if(!array_notas.get(0).get_note().isEmpty()){
-				return array_notas.size();	
-			}
-			return 0;
+			return array_notas.size();
 		}
 
 		@Override
@@ -85,11 +105,13 @@ public class Activity_Notas extends Activity {
 				arg1 = inflater.inflate(R.layout.row_notas, arg2, false);
 			}		
 			
-			String nota_substring = array_notas.get(arg0).get_note();
-			if(!nota_substring.isEmpty()){
-				nota_substring = nota_substring.substring(0, 30);				
+			String nota_subject = array_notas.get(arg0).get_note();
+			if(!nota_subject.isEmpty()){
+				if(nota_subject.length() > 30){
+					nota_subject = nota_subject.substring(0, 30) + "...";	
+				}
 				TextView nota_name = (TextView)arg1.findViewById(R.id.TextView_nota_name);
-				nota_name.setText(nota_substring);
+				nota_name.setText(nota_subject);
 				ImageView thumb_folder = (ImageView)arg1.findViewById(R.id.imageView_nota);
 				thumb_folder.setImageResource(R.drawable.nota);
 			}

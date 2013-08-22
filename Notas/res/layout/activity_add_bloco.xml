@@ -9,7 +9,7 @@
     tools:context=".Activity_add_bloco" >
 
     <EditText
-        android:id="@+id/editText_add_nota"
+        android:id="@+id/editText_add_bloco"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ellipsize="end"

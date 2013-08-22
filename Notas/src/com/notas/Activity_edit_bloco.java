@@ -1,5 +1,7 @@
 package com.notas;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -13,20 +15,19 @@ import android.widget.Toast;
 
 public class Activity_edit_bloco extends Activity {
 	
-	public int _ID = 0;
+	public String FOLDER;
 	DatabaseHandler db = new DatabaseHandler(this);
-	Nota nota = new Nota();
+	ArrayList<Nota> array_notas = new ArrayList<Nota>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit_bloco);		
 		// Recupera id do item, consulta o nome do bloco, seta no EditText
-		_ID = getIntent().getIntExtra("id", 0);
-		nota = db.getNota(_ID);
-		String nome = nota.get_folder();		
+		FOLDER = getIntent().getStringExtra("folder");
+		array_notas = db.getNotaFolder(FOLDER);	
 		EditText nome_bloco = (EditText) findViewById(R.id.editText_add_nota);
-		nome_bloco.setText(nome);
+		nome_bloco.setText(FOLDER);
 		
 	}
 
@@ -38,21 +39,17 @@ public class Activity_edit_bloco extends Activity {
 	}
 	
 	public void bt_OK(View v){
-		EditText nome_pasta = (EditText)findViewById(R.id.editText_add_nota);
-		nome_pasta.setSingleLine(true);
-		if (!nome_pasta.getText().toString().isEmpty()){
-			
-			// Salva no DB			
-			nota.set_folder(nome_pasta.getText().toString());
-			if(db.updateNota(nota) > 0){
-			
+		EditText txt = (EditText)findViewById(R.id.editText_add_nota);
+		txt.setSingleLine(true);
+		if (!txt.getText().toString().isEmpty()){			
+			for (Nota a : array_notas){
+				a.set_folder(txt.getText().toString());
+				db.updateNota(a);
+			}			
 			Intent in = new Intent();			
 			setResult(RESULT_OK, in);
 			finish();
-			}
-			else{
-				Log.v("ERRO", "Nenhuma entrada foi atualizada -> db.updateNota() retornou "+ db.updateNota(nota) + " linhas.");
-			}
+		
 		}
 		else{
 			Toast.makeText(getApplicationContext(), "Você não digitou o nome do bloco", Toast.LENGTH_SHORT).show();
@@ -64,16 +61,18 @@ public class Activity_edit_bloco extends Activity {
 		
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);		
 		builder.setTitle("Remover Bloco de Notas");
-		builder.setMessage("Você tem certeza que deseja remove-lo?");		
+		builder.setMessage("Você tem certeza que deseja remove-lo?");
+		
 		builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
 		    public void onClick(DialogInterface dialog, int which) {		    	
-		    	db.deleteFolder(nota);
+		    	
+		    	db.deleteFolder(array_notas.get(0));
 		    	EditText nome_bloco = (EditText) findViewById(R.id.editText_add_nota);
 				nome_bloco.setText("");
 		        dialog.dismiss();		        
 		        Intent in = new Intent();			
 				setResult(RESULT_OK, in);
-				Toast.makeText(getApplicationContext(), "O Bloco de notas \""+nota.get_folder()+"\" foi removido com sucesso!", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), "O Bloco de notas \""+FOLDER+"\" foi removido com sucesso!", Toast.LENGTH_SHORT).show();
 				finish();
 		    }
 		});
