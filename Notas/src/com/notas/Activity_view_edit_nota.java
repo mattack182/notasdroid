@@ -23,11 +23,7 @@ public class Activity_view_edit_nota extends Activity {
 		setContentView(R.layout.activity_view_edit_nota);
 		_ID = getIntent().getIntExtra("id", 0);
 		nota = db.getNota(_ID);	
-		EditText txt = (EditText)findViewById(R.id.editText1);
-		Log.v("TAGTAGTAG", nota.get_note());
-		Log.v("TAGTAGTAG", nota.get_folder());
-		Log.v("TAGTAGTAG", nota.get_id()+"");
-		
+		EditText txt = (EditText)findViewById(R.id.editText1);		
 		txt.setText(nota.get_note());
 		
 	}

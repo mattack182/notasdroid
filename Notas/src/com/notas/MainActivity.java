@@ -175,12 +175,8 @@ public class MainActivity extends Activity {
 			pastas.add(bloco.get_folder());
 		}
 		array_blocos.clear();
-		array_blocos.addAll(pastas);
-		
-		// DEBUG
-		for(String b : array_blocos){
-			Log.v("ARRAY_BLOCOS", b);
-		}
+		array_blocos.addAll(pastas);		
+
 	}
 	
 	/*

@@ -141,7 +141,7 @@ public class Activity_Notas extends Activity {
 			
 			String nota_subject = array_notas.get(arg0).get_note();
 			nota_subject = nota_subject.replace("\n"," ");
-			Log.v("SUBSTRING", nota_subject);
+			
 			if(!nota_subject.isEmpty()){
 				if(nota_subject.length() > 20){
 					nota_subject = (arg0 + 1) + ". " + nota_subject.substring(0, 20) + "...";	
