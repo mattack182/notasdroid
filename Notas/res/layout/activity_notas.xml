@@ -16,15 +16,15 @@
     </ListView>
 
      <Button
-        android:id="@+id/button_add_nota"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:includeFontPadding="false"
-        android:onClick="bt_add_nota"
-        android:text="Nova Nota" />
-  
+         android:id="@+id/button_add_nota"
+         style="?android:attr/buttonStyleSmall"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_alignParentBottom="true"
+         android:layout_alignParentLeft="true"
+         android:includeFontPadding="false"
+         android:onClick="bt_add_nota"
+         android:text="Nova Nota"
+         android:visibility="invisible" />
 
 </RelativeLayout>

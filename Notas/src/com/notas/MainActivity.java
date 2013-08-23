@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -23,6 +26,7 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity {
 	
+	private MenuItem settings;
 	private MenuItem adicionar;
 	public DatabaseHandler db;
 	public int REQUEST_ADD_BLOCO = 10;
@@ -98,23 +102,55 @@ public class MainActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
-		adicionar = menu.add(Menu.NONE, 10, 0, "Adicionar");
+		settings = menu.add(Menu.NONE, 10, 0, "Apagar Tudo");
+		settings.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		settings.setIcon(android.R.drawable.ic_menu_delete);
+		
+		adicionar = menu.add(Menu.NONE, 11, 1, "Adicionar");
 		adicionar.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-		adicionar.setIcon(android.R.drawable.ic_menu_manage);		
+		adicionar.setIcon(android.R.drawable.ic_menu_add);
+		
 		return true;
 	}
 		
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {		
 		
-		if(item==adicionar){		
-			for (int i = 0; i < array_notas.size(); i++){
-				db.deleteNota(array_notas.get(i));
-			}
-			dataInit();
-			Toast.makeText(getApplicationContext(), "Todo conteúdo foi apagado!!", Toast.LENGTH_SHORT).show();
-			adapter.notifyDataSetChanged();
+		if(item==settings){
 			
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);		
+			builder.setTitle("Atenção!");
+			builder.setMessage("Você está prestes a apagar TODOS os blocos de nota.\nDeseja apagar todos os blocos de notas?");
+			
+			builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+			    public void onClick(DialogInterface dialog, int which) {		    	
+			    	
+			    	for (int i = 0; i < array_notas.size(); i++){
+						db.deleteNota(array_notas.get(i));
+					}
+					dataInit();
+					Toast.makeText(getApplicationContext(), "Todos os blocos de notas foram apagados!!", Toast.LENGTH_SHORT).show();
+					adapter.notifyDataSetChanged();
+
+			    }
+			});
+			
+			builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+			    public void onClick(DialogInterface dialog, int which) {
+			        // Não faz nada, fecha a AlertDialog
+			        dialog.dismiss();
+			        
+			    }
+			});
+
+			AlertDialog alert = builder.create();
+			alert.show();		
+			
+		
+			
+		}
+		if ( item == adicionar){
+			bt_add_bloco(getCurrentFocus());
 		}
 		return super.onMenuItemSelected(featureId, item);
 	}	

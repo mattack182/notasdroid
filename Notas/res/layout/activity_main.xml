@@ -26,6 +26,7 @@
         android:includeFontPadding="false"
         android:onClick="bt_add_bloco"
         android:text="Adicionar Pasta"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:visibility="invisible" />
 
 </RelativeLayout>

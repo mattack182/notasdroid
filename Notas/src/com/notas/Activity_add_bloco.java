@@ -1,5 +1,7 @@
 package com.notas;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,11 +13,12 @@ import android.widget.Toast;
 public class Activity_add_bloco extends Activity {	
 	
 	DatabaseHandler db = new DatabaseHandler(this);
+	ArrayList<Nota> notas = new ArrayList<Nota>();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_add_bloco);
+		setContentView(R.layout.activity_add_bloco);		
 	}
 
 	@Override
@@ -28,23 +31,31 @@ public class Activity_add_bloco extends Activity {
 	public void bt_OK(View v){
 		EditText nome_pasta = (EditText)findViewById(R.id.editText_add_bloco);
 		nome_pasta.setSingleLine(true);
-		if (!nome_pasta.getText().toString().isEmpty()){
-			
-			// Salva no DB
-			Nota nota = new Nota();
-			nota.set_folder(nome_pasta.getText().toString());
-			nota.set_date(System.currentTimeMillis());
-			nota.set_note("");
-			nota.set_title("");
-			db.addNota(nota);
-			
-			Intent in = new Intent();
-			setResult(RESULT_OK, in);
-			finish();	
+		
+		notas = db.getNotaFolder(nome_pasta.getText().toString());
+		if (notas.isEmpty()){
+			if (!nome_pasta.getText().toString().isEmpty()){
+				
+				// Salva no DB
+				Nota nota = new Nota();
+				nota.set_folder(nome_pasta.getText().toString());
+				nota.set_date(System.currentTimeMillis());
+				nota.set_note("");
+				nota.set_title("");
+				db.addNota(nota);
+				
+				Intent in = new Intent();
+				setResult(RESULT_OK, in);
+				finish();	
+			}
+			else{
+				Toast.makeText(getApplicationContext(), "Você não digitou um nome para o bloco de notas", Toast.LENGTH_SHORT).show();
+			}
 		}
 		else{
-			Toast.makeText(getApplicationContext(), "Você não digitou o nome do bloco", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(), "Bloco de notas já existe!", Toast.LENGTH_SHORT).show();
 		}
+		
 		
 	}
 

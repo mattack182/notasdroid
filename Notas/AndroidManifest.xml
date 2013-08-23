@@ -49,7 +49,7 @@
         </activity>
         <activity
             android:name="com.notas.Activity_view_edit_nota"
-            android:label="@string/title_activity_activity_view_edit_nota">
+            android:label="Nota">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.notas.Activity_Notas" />
