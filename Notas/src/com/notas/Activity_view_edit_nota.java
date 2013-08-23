@@ -5,8 +5,10 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -23,8 +25,18 @@ public class Activity_view_edit_nota extends Activity {
 		setContentView(R.layout.activity_view_edit_nota);
 		_ID = getIntent().getIntExtra("id", 0);
 		nota = db.getNota(_ID);	
-		EditText txt = (EditText)findViewById(R.id.editText1);		
-		txt.setText(nota.get_note());
+		final EditText txt = (EditText)findViewById(R.id.editText1);		
+		txt.setText(nota.get_note());	
+		// remove cursor e seta cursor apenas quando usuário clicar no EditText
+		txt.setCursorVisible(false);
+		txt.setOnTouchListener(new View.OnTouchListener() {			
+			public boolean onTouch(View v, MotionEvent event) {
+				// TODO Auto-generated method stub
+				txt.setCursorVisible(true);
+				return false;
+			}	
+		});
+		
 		
 	}
 	
@@ -34,6 +46,7 @@ public class Activity_view_edit_nota extends Activity {
 			nota.set_note(txt.getText().toString());
 			nota.set_date(System.currentTimeMillis());
 			db.updateNota(nota);
+			Toast.makeText(getApplicationContext(), "A nota foi salva!", Toast.LENGTH_SHORT).show();
 			Intent in = new Intent();			
 			setResult(RESULT_OK, in);
 			finish();

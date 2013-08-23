@@ -12,7 +12,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/str_bloco_notas"
-        android:theme="@style/AppTheme" >
+        android:theme="@android:style/Theme.WithActionBar" >
         <activity
             android:name="com.notas.MainActivity"
             android:label="@string/str_bloco_notas" >
